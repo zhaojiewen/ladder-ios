@@ -59,7 +59,7 @@ $ git clone https://github.com/sheng/ladder-ios.git
 ```bash
 $ cd ladder-ios
 $ git submodule update --init --recursive
-$ carthage update --no-use-binaries --platform ios
+$ carthage update --no-use-binaries --platform iOS
 ```
 
 3. Open the `Ladder.xcodeproj`.
@@ -83,6 +83,7 @@ If you want to help build this project, simply send pull requests
 * [x] Provide an option to store PAC during configuration
 * [ ] No longer rely on the [NEKit](https://github.com/zhuhaow/NEKit) to
 implement the Shadowsocks protocol
+* [ ] No longer use PAC to decide whether to proxy
 * [ ] Stop tunnel when authentication fails
 * [ ] Add support for more Shadowsocks methods
 * [ ] Add support for IPv6
