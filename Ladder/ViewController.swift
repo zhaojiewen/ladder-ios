@@ -10,7 +10,6 @@ import Alamofire
 import Eureka
 import NetworkExtension
 import SafariServices
-import Security
 
 class ViewController: FormViewController {
 	override func viewDidLoad() {
@@ -291,8 +290,8 @@ class ViewController: FormViewController {
 		var query = [CFString: Any]()
 		query[kSecClass] = kSecClassGenericPassword
 		query[kSecAttrAccount] = key
-		query[kSecReturnData] = kCFBooleanTrue
 		query[kSecMatchLimit] = kSecMatchLimitOne
+		query[kSecReturnData] = kCFBooleanTrue
 		var data: CFTypeRef?
 		SecItemCopyMatching(query as CFDictionary, &data)
 		return data as? Data
