@@ -26,7 +26,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 		let shadowsocksMethod = providerConfiguration["shadowsocks_method"] as! String
 
 		let networkSettings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: shadowsocksServerAddress)
-		networkSettings.dnsSettings = NEDNSSettings(servers: ["8.8.8.8", "8.8.4.4"])
+		networkSettings.dnsSettings = NEDNSSettings(servers: ["8.8.8.8", "8.8.4.4", "2001:4860:4860::8888", "2001:4860:4860::8844"])
 		networkSettings.proxySettings = NEProxySettings()
 		networkSettings.proxySettings?.autoProxyConfigurationEnabled = true
 		if generalPACMaxAge == 0 {

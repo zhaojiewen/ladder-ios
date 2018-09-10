@@ -40,7 +40,9 @@ class ViewController: FormViewController {
 				row.title = "PAC URL"
 				row.placeholder = NSLocalizedString("Enter PAC URL here", comment: "")
 				if let data = ReadFromKeychain(key: "general_pac_url") {
-					row.value = URL(string: String(data: data, encoding: .utf8) ?? "https://git.io/gfwpac")
+					row.value = URL(string: String(data: data, encoding: .utf8)!)
+				} else {
+					row.value = URL(string: "https://git.io/gfwpac")
 				}
 
 				row.add(rule: RuleRequired(msg: NSLocalizedString("Please enter a PAC URL.", comment: "")))
@@ -51,7 +53,9 @@ class ViewController: FormViewController {
 				row.title = NSLocalizedString("PAC Max Age", comment: "")
 				row.placeholder = NSLocalizedString("Enter PAC max age here", comment: "")
 				if let data = ReadFromKeychain(key: "general_pac_max_age") {
-					row.value = Int(String(data: data, encoding: .utf8) ?? "3600")
+					row.value = Int(String(data: data, encoding: .utf8)!)
+				} else {
+					row.value = 3600
 				}
 				row.formatter = NumberFormatter()
 
@@ -95,7 +99,9 @@ class ViewController: FormViewController {
 				row.title = NSLocalizedString("Local Address", comment: "")
 				row.placeholder = NSLocalizedString("Enter local address here", comment: "")
 				if let data = ReadFromKeychain(key: "shadowsocks_local_address") {
-					row.value = String(data: data, encoding: .utf8) ?? "127.0.0.1"
+					row.value = String(data: data, encoding: .utf8)
+				} else {
+					row.value = "127.0.0.1"
 				}
 				row.cell.textField.keyboardType = .asciiCapable
 				row.cell.textField.autocapitalizationType = .none
@@ -107,7 +113,9 @@ class ViewController: FormViewController {
 				row.title = NSLocalizedString("Local Port", comment: "")
 				row.placeholder = NSLocalizedString("Enter local port here", comment: "")
 				if let data = ReadFromKeychain(key: "shadowsocks_local_port") {
-					row.value = Int(String(data: data, encoding: .utf8) ?? "1081")
+					row.value = Int(String(data: data, encoding: .utf8)!)
+				} else {
+					row.value = 1081
 				}
 				row.formatter = NumberFormatter()
 
@@ -131,8 +139,11 @@ class ViewController: FormViewController {
 				row.selectorTitle = NSLocalizedString("Shadowsocks Method", comment: "")
 				row.options = ["AES-128-CFB", "AES-192-CFB", "AES-256-CFB", "ChaCha20", "Salsa20", "RC4-MD5"]
 				if let data = ReadFromKeychain(key: "shadowsocks_method") {
-					row.value = String(data: data, encoding: .utf8) ?? "AES-256-CFB"
+					row.value = String(data: data, encoding: .utf8)
+				} else {
+					row.value = "AES-256-CFB"
 				}
+
 				row.cell.detailTextLabel?.textColor = .black
 			}
 
@@ -285,7 +296,6 @@ class ViewController: FormViewController {
 		present(SFSafariViewController(url: URL(string: "https://aofei.org/posts/2018-04-05-immersive-wallless-experience")!), animated: true)
 	}
 
-	@discardableResult
 	func ReadFromKeychain(key: String) -> Data? {
 		var query = [CFString: Any]()
 		query[kSecClass] = kSecClassGenericPassword
