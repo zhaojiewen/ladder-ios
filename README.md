@@ -83,7 +83,6 @@ If you want to help build this project, simply send pull requests
 * [x] Provide an option to store PAC during configuration
 * [ ] No longer rely on the [NEKit](https://github.com/zhuhaow/NEKit) to
 implement the Shadowsocks protocol
-* [ ] No longer use PAC to decide whether to proxy
 * [ ] Stop tunnel when authentication fails
 * [ ] Add support for more Shadowsocks methods
 * [ ] Add support for IPv6
