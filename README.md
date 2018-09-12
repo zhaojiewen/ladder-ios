@@ -11,7 +11,7 @@ Keep in mind:
 * Hide VPN Icon
 * PAC (Proxy auto-config)
 	* Default URL: [https://git.io/gfwpac](https://git.io/gfwpac)
-		* Powered by [GFWPAC](https://github.com/sheng/gfwpac)
+		* Powered by [GFWPAC](https://github.com/aofei/gfwpac)
 		* Default proxies (will try in order):
 			* `SOCKS5 127.0.0.1:1081`
 			* `SOCKS 127.0.0.1:1081`
@@ -19,16 +19,6 @@ Keep in mind:
 			* `SOCKS 127.0.0.1:1080`
 			* `DIRECT`
 		* Almost no risk of being blocked (hosted on GitHub)
-	* Recommended URL: [https://aofei.org/pac](https://aofei.org/pac)
-		* Powered by [Aofei ['ɔ:fei]](https://aofei.org)
-		* Default proxies (will try in order):
-			* `SOCKS5 127.0.0.1:1080`
-			* `SOCKS 127.0.0.1:1080`
-			* `DIRECT`
-		* Custom proxies support:
-			* `https://aofei.org/pac?proxies=SOCKS5+127.0.0.1%3A1081`
-			* `https://aofei.org/pac?proxies=DIRECT`
-		* HTTP caching support (`max-age` is 3600)
 * Shadowsocks
 	* Powered by [NEKit](https://github.com/zhuhaow/NEKit)
 	* Multiple methods support:
@@ -51,7 +41,7 @@ Keep in mind:
 1. Check out the latest version of the project:
 
 ```bash
-$ git clone https://github.com/sheng/ladder-ios.git
+$ git clone https://github.com/aofei/ladder-ios.git
 ```
 
 2. Enter the project directory, check out the project's dependencies:
@@ -71,12 +61,12 @@ $ carthage update --no-use-binaries --platform iOS
 ## Community
 
 If you want to discuss this project, or ask questions about it, simply post
-questions or ideas [here](https://github.com/sheng/ladder-ios/issues).
+questions or ideas [here](https://github.com/aofei/ladder-ios/issues).
 
 ## Contributing
 
 If you want to help build this project, simply send pull requests
-[here](https://github.com/sheng/ladder-ios/pulls).
+[here](https://github.com/aofei/ladder-ios/pulls).
 
 ## TODOs
 
