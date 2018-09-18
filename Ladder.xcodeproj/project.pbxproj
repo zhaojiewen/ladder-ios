@@ -76,7 +76,6 @@
 		04DC45E620E6211F00F6841B /* md4.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC450D20E6211F00F6841B /* md4.c */; };
 		04DC45E720E6211F00F6841B /* des.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC450E20E6211F00F6841B /* des.c */; };
 		04DC45E820E6211F00F6841B /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC450F20E6211F00F6841B /* sha1.c */; };
-		04DC45E920E6211F00F6841B /* README in Resources */ = {isa = PBXBuildFile; fileRef = 04DC451020E6211F00F6841B /* README */; };
 		04DC45EA20E6211F00F6841B /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC451120E6211F00F6841B /* md5.c */; };
 		04DC45EB20E6211F00F6841B /* arc4.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC451220E6211F00F6841B /* arc4.c */; };
 		04DC45EC20E6211F00F6841B /* lcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC451320E6211F00F6841B /* lcp.c */; };
@@ -92,11 +91,8 @@
 		04DC45F620E6211F00F6841B /* demand.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC451D20E6211F00F6841B /* demand.c */; };
 		04DC45F720E6211F00F6841B /* ppp.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC451E20E6211F00F6841B /* ppp.c */; };
 		04DC45F820E6211F00F6841B /* ipcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC451F20E6211F00F6841B /* ipcp.c */; };
-		04DC45F920E6211F00F6841B /* PPPD_FOLLOWUP in Resources */ = {isa = PBXBuildFile; fileRef = 04DC452020E6211F00F6841B /* PPPD_FOLLOWUP */; };
 		04DC45FA20E6211F00F6841B /* ethernetif.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC452120E6211F00F6841B /* ethernetif.c */; };
 		04DC45FB20E6211F00F6841B /* lowpan6.c in Sources */ = {isa = PBXBuildFile; fileRef = 04DC452220E6211F00F6841B /* lowpan6.c */; };
-		04DC45FC20E6211F00F6841B /* FILES in Resources */ = {isa = PBXBuildFile; fileRef = 04DC452320E6211F00F6841B /* FILES */; };
-		04DC45FD20E6211F00F6841B /* FILES in Resources */ = {isa = PBXBuildFile; fileRef = 04DC458120E6211F00F6841B /* FILES */; };
 		04EA46092064C9B7002578AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA46082064C9B7002578AF /* AppDelegate.swift */; };
 		04EA460B2064C9B7002578AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA460A2064C9B7002578AF /* ViewController.swift */; };
 		04EA46102064C9B7002578AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04EA460F2064C9B7002578AF /* Assets.xcassets */; };
@@ -899,6 +895,7 @@
 				TargetAttributes = {
 					04EA46042064C9B7002578AF = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -914,7 +911,7 @@
 					};
 					04EA46322064D10E002578AF = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -966,10 +963,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04DC45FD20E6211F00F6841B /* FILES in Resources */,
-				04DC45FC20E6211F00F6841B /* FILES in Resources */,
-				04DC45F920E6211F00F6841B /* PPPD_FOLLOWUP in Resources */,
-				04DC45E920E6211F00F6841B /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1285,7 +1278,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.aofei.ladder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1309,7 +1302,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.aofei.ladder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1339,7 +1332,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = PacketTunnel/BridgingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/PacketTunnel/src/include $(SRCROOT)/PacketTunnel/lwip/src/include";
 			};
@@ -1369,7 +1362,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = PacketTunnel/BridgingHeader.h;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/PacketTunnel/src/include $(SRCROOT)/PacketTunnel/lwip/src/include";
 			};

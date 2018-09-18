@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	let window = UIWindow(frame: UIScreen.main.bounds)
 
-	func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		window.backgroundColor = .white
 		window.rootViewController = UINavigationController(rootViewController: ViewController())
 		window.makeKeyAndVisible()
