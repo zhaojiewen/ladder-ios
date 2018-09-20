@@ -33,6 +33,8 @@ class ViewController: FormViewController {
 				row.title = NSLocalizedString("Hide VPN Icon", comment: "")
 				if let data = ReadFromKeychain(key: "general_hide_vpn_icon") {
 					row.value = String(data: data, encoding: .utf8) == "true"
+				} else {
+					row.value = false
 				}
 			}
 			<<< URLRow { row in
