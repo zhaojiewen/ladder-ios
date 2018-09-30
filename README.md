@@ -32,7 +32,7 @@ Keep in mind:
 ## Requirements
 
 * iOS 9.3+
-* Xcode 8.0+
+* Xcode 9.2+
 * [Apple Developer Program](https://developer.apple.com/programs)
 * [Carthage](https://github.com/carthage/carthage)
 
