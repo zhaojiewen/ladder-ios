@@ -6,7 +6,6 @@
 //  Copyright © 2018 Aofei Sheng. All rights reserved.
 //
 
-import Alamofire
 import NetworkExtension
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
@@ -34,6 +33,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 		} else {
 			networkSettings.proxySettings?.proxyAutoConfigurationJavaScript = generalPACContent
 		}
+
 		networkSettings.proxySettings?.excludeSimpleHostnames = true
 		networkSettings.proxySettings?.matchDomains = [""]
 		networkSettings.ipv4Settings = NEIPv4Settings(addresses: generalHideVPNIcon ? [] : ["10.0.0.1"], subnetMasks: generalHideVPNIcon ? [] : ["255.0.0.0"])
@@ -61,6 +61,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 					self.updatePACPeriodically()
 				}
 			}
+
 			completionHandler(error)
 		}
 	}
@@ -69,6 +70,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 		if reason != .none {
 			shadowsocks?.stop()
 		}
+
 		completionHandler()
 	}
 
@@ -78,8 +80,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 		let generalPACContent = providerConfiguration["general_pac_content"] as! String
 		let generalPACMaxAge = providerConfiguration["general_pac_max_age"] as! TimeInterval
 
-		Alamofire.request(generalPACURL).responseString { response in
-			if response.response?.statusCode == 200, let pacContent = response.value, pacContent != generalPACContent {
+		var urlRequest = URLRequest(url: generalPACURL)
+		urlRequest.httpMethod = "GET"
+
+		let urlSessionTask = URLSession(configuration: .default).downloadTask(with: urlRequest) { tempLocalURL, urlResponse, _ in
+			if (urlResponse as? HTTPURLResponse)?.statusCode == 200, let tempLocalURL = tempLocalURL, let pacContent = try? String(contentsOf: tempLocalURL, encoding: .utf8), pacContent != generalPACContent {
 				providerConfiguration["general_pac_content"] = pacContent
 
 				self.stopTunnel(with: .none) {
@@ -93,6 +98,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 				self.updatePACPeriodically()
 			}
 		}
+
+		urlSessionTask.resume()
 	}
 
 	func lookupIPAddress(hostname: String) -> String? {
@@ -105,6 +112,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 				return String(cString: hostname)
 			}
 		}
+
 		return nil
 	}
 }

@@ -1,3 +1,2 @@
-github "Alamofire/Alamofire" ~> 4.7.3
 github "xmartlabs/Eureka" ~> 4.3.0
-github "zhuhaow/NEKit" ~> 0.13.0
+github "zhuhaow/NEKit" ~> 0.13.1

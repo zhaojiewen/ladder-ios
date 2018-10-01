@@ -6,7 +6,6 @@
 //  Copyright © 2018 Aofei Sheng. All rights reserved.
 //
 
-import Alamofire
 import Eureka
 import NetworkExtension
 import SafariServices
@@ -59,6 +58,7 @@ class ViewController: FormViewController {
 				} else {
 					row.value = 3600
 				}
+
 				row.formatter = NumberFormatter()
 
 				row.add(rule: RuleRequired(msg: NSLocalizedString("Please enter a PAC max age.", comment: "")))
@@ -78,6 +78,7 @@ class ViewController: FormViewController {
 				if let data = ReadFromKeychain(key: "shadowsocks_server_address") {
 					row.value = String(data: data, encoding: .utf8)
 				}
+
 				row.cell.textField.keyboardType = .asciiCapable
 				row.cell.textField.autocapitalizationType = .none
 
@@ -90,6 +91,7 @@ class ViewController: FormViewController {
 				if let data = ReadFromKeychain(key: "shadowsocks_server_port"), let string = String(data: data, encoding: .utf8) {
 					row.value = Int(string)
 				}
+
 				row.formatter = NumberFormatter()
 
 				row.add(rule: RuleRequired(msg: NSLocalizedString("Please enter a Shadowsocks server port.", comment: "")))
@@ -105,6 +107,7 @@ class ViewController: FormViewController {
 				} else {
 					row.value = "127.0.0.1"
 				}
+
 				row.cell.textField.keyboardType = .asciiCapable
 				row.cell.textField.autocapitalizationType = .none
 
@@ -119,6 +122,7 @@ class ViewController: FormViewController {
 				} else {
 					row.value = 1081
 				}
+
 				row.formatter = NumberFormatter()
 
 				row.add(rule: RuleRequired(msg: NSLocalizedString("Please enter a Shadowsocks local port.", comment: "")))
@@ -165,27 +169,7 @@ class ViewController: FormViewController {
 				)
 				self.present(configuringAlertController, animated: true)
 
-				if let reachable = Alamofire.NetworkReachabilityManager(host: "8.8.8.8")?.isReachable, !reachable {
-					let alertController = UIAlertController(
-						title: NSLocalizedString("Configuration Failed", comment: ""),
-						message: NSLocalizedString("Please check your network settings and allow Ladder to access your wireless data in the system's \"Settings - Cellular\" option (remember to check the \"WLAN & Cellular Data\").", comment: ""),
-						preferredStyle: .alert
-					)
-					if let openSettingsURL = URL(string: UIApplication.openSettingsURLString) {
-						alertController.addAction(UIAlertAction(
-							title: NSLocalizedString("Settings", comment: ""),
-							style: .default,
-							handler: { _ in
-								UIApplication.shared.openURL(openSettingsURL)
-							}
-						))
-					}
-					alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
-					configuringAlertController.dismiss(animated: true) {
-						self.present(alertController, animated: true)
-					}
-					return
-				} else if let firstValidationError = self.form.validate().first {
+				if let firstValidationError = self.form.validate().first {
 					let alertController = UIAlertController(
 						title: NSLocalizedString("Configuration Failed", comment: ""),
 						message: firstValidationError.msg,
@@ -195,6 +179,7 @@ class ViewController: FormViewController {
 					configuringAlertController.dismiss(animated: true) {
 						self.present(alertController, animated: true)
 					}
+
 					return
 				}
 
@@ -208,8 +193,11 @@ class ViewController: FormViewController {
 				let shadowsocksPassword = (self.form.rowBy(tag: "Shadowsocks - Password") as! PasswordRow).value!
 				let shadowsocksMethod = (self.form.rowBy(tag: "Shadowsocks - Method") as! ActionSheetRow<String>).value!
 
-				Alamofire.request(generalPACURL).responseString { response in
-					if response.response?.statusCode != 200 || response.value == nil {
+				var urlRequest = URLRequest(url: generalPACURL)
+				urlRequest.httpMethod = "GET"
+
+				let urlSessionTask = URLSession(configuration: .default).downloadTask(with: urlRequest) { tempLocalURL, urlResponse, _ in
+					guard (urlResponse as? HTTPURLResponse)?.statusCode == 200, let tempLocalURL = tempLocalURL, let pacContent = try? String(contentsOf: tempLocalURL, encoding: .utf8) else {
 						let alertController = UIAlertController(
 							title: NSLocalizedString("Configuration Failed", comment: ""),
 							message: NSLocalizedString("Unable to download data from the PAC URL.", comment: ""),
@@ -219,6 +207,7 @@ class ViewController: FormViewController {
 						configuringAlertController.dismiss(animated: true) {
 							self.present(alertController, animated: true)
 						}
+
 						return
 					}
 
@@ -238,7 +227,7 @@ class ViewController: FormViewController {
 						providerConfiguration.providerConfiguration = [
 							"general_hide_vpn_icon": generalHideVPNIcon,
 							"general_pac_url": generalPACURL.absoluteString,
-							"general_pac_content": response.value!,
+							"general_pac_content": pacContent,
 							"general_pac_max_age": TimeInterval(generalPACMaxAge),
 							"shadowsocks_server_address": shadowsocksServerAddress,
 							"shadowsocks_server_port": UInt16(shadowsocksServerPort),
@@ -271,6 +260,7 @@ class ViewController: FormViewController {
 									}
 								}
 							}
+
 							configuringAlertController.dismiss(animated: true) {
 								let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
 								if error != nil {
@@ -280,6 +270,7 @@ class ViewController: FormViewController {
 								} else {
 									alertController.title = NSLocalizedString("Configured!", comment: "")
 								}
+
 								self.present(alertController, animated: true) {
 									if error == nil {
 										DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -291,6 +282,8 @@ class ViewController: FormViewController {
 						}
 					}
 				}
+
+				urlSessionTask.resume()
 			}
 	}
 
@@ -304,8 +297,10 @@ class ViewController: FormViewController {
 		query[kSecAttrAccount] = key
 		query[kSecMatchLimit] = kSecMatchLimitOne
 		query[kSecReturnData] = kCFBooleanTrue
+
 		var data: CFTypeRef?
 		SecItemCopyMatching(query as CFDictionary, &data)
+
 		return data as? Data
 	}
 
