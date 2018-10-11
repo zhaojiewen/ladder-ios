@@ -20,18 +20,16 @@ Keep in mind:
 			* `DIRECT`
 		* Almost no risk of being blocked (hosted on GitHub)
 * Shadowsocks
-	* Powered by [NEKit](https://github.com/zhuhaow/NEKit)
+	* IPv6 support.
 	* Multiple methods support:
 		* `AES-128-CFB`
 		* `AES-192-CFB`
 		* `AES-256-CFB` **(RECOMMENDED)**
-		* `ChaCha20`
-		* `Salsa20`
 		* `RC4-MD5`
 
 ## Requirements
 
-* iOS 9.3+
+* iOS 9.0+
 * Xcode 9.2+
 * [Apple Developer Program](https://developer.apple.com/programs)
 * [Carthage](https://github.com/carthage/carthage)
@@ -71,11 +69,11 @@ If you want to help build this project, simply send pull requests
 ## TODOs
 
 * [x] Provide an option to store PAC during configuration
-* [ ] No longer rely on the [NEKit](https://github.com/zhuhaow/NEKit) to
+* [x] No longer rely on the [NEKit](https://github.com/zhuhaow/NEKit) to
 implement the Shadowsocks protocol
+* [x] Add support for IPv6
 * [ ] Stop tunnel when authentication fails
 * [ ] Add support for more Shadowsocks methods
-* [ ] Add support for IPv6
 
 ## License
 

@@ -1,2 +1,2 @@
+github "robbiehanson/CocoaAsyncSocket" ~> 7.6.3
 github "xmartlabs/Eureka" ~> 4.3.0
-github "zhuhaow/NEKit" ~> 0.13.1

@@ -80,11 +80,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 		let generalPACContent = providerConfiguration["general_pac_content"] as! String
 		let generalPACMaxAge = providerConfiguration["general_pac_max_age"] as! TimeInterval
 
-		var urlRequest = URLRequest(url: generalPACURL)
-		urlRequest.httpMethod = "GET"
-
-		let urlSessionTask = URLSession(configuration: .default).downloadTask(with: urlRequest) { tempLocalURL, urlResponse, _ in
-			if (urlResponse as? HTTPURLResponse)?.statusCode == 200, let tempLocalURL = tempLocalURL, let pacContent = try? String(contentsOf: tempLocalURL, encoding: .utf8), pacContent != generalPACContent {
+		URLSession.shared.dataTask(with: generalPACURL) { data, response, _ in
+			if (response as? HTTPURLResponse)?.statusCode == 200, let data = data, let pacContent = String(data: data, encoding: .utf8), pacContent != generalPACContent {
 				providerConfiguration["general_pac_content"] = pacContent
 
 				self.stopTunnel(with: .none) {
@@ -97,9 +94,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 			DispatchQueue.main.asyncAfter(deadline: .now() + generalPACMaxAge) {
 				self.updatePACPeriodically()
 			}
-		}
-
-		urlSessionTask.resume()
+		}.resume()
 	}
 
 	func lookupIPAddress(hostname: String) -> String? {

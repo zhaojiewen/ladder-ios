@@ -21,6 +21,10 @@ class ViewController: FormViewController {
 		navigationController?.navigationBar.barTintColor = UIColor(red: 80 / 255, green: 140 / 255, blue: 240 / 255, alpha: 1)
 		navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
+		let tapToDismissKeyboard = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+		tapToDismissKeyboard.cancelsTouchesInView = false
+		view.addGestureRecognizer(tapToDismissKeyboard)
+
 		form
 			+++ Section(header: NSLocalizedString("General", comment: ""), footer: "") { section in
 				section.tag = "General"
@@ -143,7 +147,7 @@ class ViewController: FormViewController {
 				row.tag = "Shadowsocks - Method"
 				row.title = NSLocalizedString("Method", comment: "")
 				row.selectorTitle = NSLocalizedString("Shadowsocks Method", comment: "")
-				row.options = ["AES-128-CFB", "AES-192-CFB", "AES-256-CFB", "ChaCha20", "Salsa20", "RC4-MD5"]
+				row.options = ["AES-128-CFB", "AES-192-CFB", "AES-256-CFB", "RC4-MD5"]
 				if let data = ReadFromKeychain(key: "shadowsocks_method") {
 					row.value = String(data: data, encoding: .utf8)
 				} else {
@@ -193,11 +197,8 @@ class ViewController: FormViewController {
 				let shadowsocksPassword = (self.form.rowBy(tag: "Shadowsocks - Password") as! PasswordRow).value!
 				let shadowsocksMethod = (self.form.rowBy(tag: "Shadowsocks - Method") as! ActionSheetRow<String>).value!
 
-				var urlRequest = URLRequest(url: generalPACURL)
-				urlRequest.httpMethod = "GET"
-
-				let urlSessionTask = URLSession(configuration: .default).downloadTask(with: urlRequest) { tempLocalURL, urlResponse, _ in
-					guard (urlResponse as? HTTPURLResponse)?.statusCode == 200, let tempLocalURL = tempLocalURL, let pacContent = try? String(contentsOf: tempLocalURL, encoding: .utf8) else {
+				URLSession.shared.dataTask(with: generalPACURL) { data, response, _ in
+					guard (response as? HTTPURLResponse)?.statusCode == 200, let data = data, let pacContent = String(data: data, encoding: .utf8) else {
 						let alertController = UIAlertController(
 							title: NSLocalizedString("Configuration Failed", comment: ""),
 							message: NSLocalizedString("Unable to download data from the PAC URL.", comment: ""),
@@ -281,9 +282,7 @@ class ViewController: FormViewController {
 							}
 						}
 					}
-				}
-
-				urlSessionTask.resume()
+				}.resume()
 			}
 	}
 
